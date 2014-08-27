@@ -1,3 +1,5 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,10 +9,10 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <link rel="apple-touch-icon-precomposed" href="/static/img/favicon-152.png">
-  <link rel="shortcut icon" sizes="16x16 32x32" type="image/x-icon" href="/static/img/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" href="{% static 'core/img/favicon-152.png' %}">
+  <link rel="shortcut icon" sizes="16x16 32x32" type="image/x-icon" href="{% static 'core/img/favicon.ico' %}">
   <meta name="msapplication-TileColor" content="#FFFFFF">
-  <meta name="msapplication-TileImage" content="/static/img/favicon-144.png">
+  <meta name="msapplication-TileImage" content="{% static 'core/img/favicon-144.png' %}">
 
   <title>MealJet - ~15mins. 8 bucks. No tips.</title>
 
@@ -18,7 +20,7 @@
   <meta property="og:title" content="MealJet -- Healthy Food Delivered"/>
   <meta property="og:site_name" content="MealJet"/>
   <meta property="og:url" content="https://www.mealjet.co"/>
-  <meta property="og:image" content="https://www.mealjet.co/static/img/feature.png?t=12345?">
+  <meta property="og:image" content="https://www.mealjet.co{% static 'core/img/feature.png' %}?t=12345?">
   <meta property="og:type" content="website"/>
   <meta property="og:description" content="Looking for new food everyday? MealJet is there for you"/>
 
@@ -28,7 +30,7 @@
   <meta name="twitter:creator" content="@mealjet">
   <meta name="twitter:title" content="MealJet">
   <meta name="twitter:description" content="~15mins. 8 bucks. No tips.">
-  <meta name="twitter:image" content="https://www.mealjet.co/static/img/withflame.png">
+  <meta name="twitter:image" content="https://www.mealjet.co{% static 'core/img/withflame.png' %}">
   <meta name="twitter:height" content="200">
   <meta name="twitter:width" content="300">
   <meta name="twitter:data1" content="$8">
@@ -39,12 +41,10 @@
   <!--Google Arvo Font-->
   <link href='https://fonts.googleapis.com/css?family=Arvo:400,400italic' rel='stylesheet' type='text/css'>
   <!-- Bootstrap core CSS -->
-  <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{% static 'core/css/bootstrap.min.css' %}" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="/static/css/faq.css" rel="stylesheet">
-
-  <script type="text/javascript" src="/static/js/analytics.js"></script>
+  <link href="{% static 'core/css/base.css' %}" rel="stylesheet">
 
 
   <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -70,7 +70,7 @@
                       <span class="icon-bar"></span>
                     </button>
                     <a class="logo-link" href="/">
-                        <img src="/static/img/MealJet_Logo.svg" class="navbar-brand logo-img home-btn" alt="MealJet Logo">
+                        <img src="{% static 'core/img/MealJet_Logo.svg' %}" class="navbar-brand logo-img home-btn" alt="MealJet Logo">
                     </a>
                 </div>
 
@@ -78,84 +78,23 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                       <li class="home-btn"><a href="/">Home</a></li>
-                      <li class="active"><a href="/about/">About</a></li>
-                      <li><a href="/faq/">FAQ</a></li>
+                      <li><a href="/about/">About</a></li>
+                      <li class="active"><a href="/faq/">FAQ</a></li>
                       <li><a href="https://twitter.com/mealjet">@MealJet</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
 
             </div><!-- /.container-fluid -->
         </nav>
-        <div class="container-fluid self-container-nopadding">
-            <div class="row">
-                <p class="lead cover-heading">About Us </p>
-            </div>
 
-            <div class="row">
-                <div id="about-head" class="col-md-6 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12 col-xs-offset-0 nopadding">
-
-                    <ul class="list-unstyled">
-                        <li>
-                            <span class="glyphicon glyphicon-ok"></span>
-                            <span>Find yourself hungry?</span>
-                        </li>
-                        <li>
-                            <span class="glyphicon glyphicon-ok"></span>
-                            <span>Forgot to do grocery? Again...</span>
-                        </li>
-                        <li>
-                            <span class="glyphicon glyphicon-ok"></span>
-                            <span>Pick up food? Have you seen the weather...</span>
-                        </li>
-                        <li>
-                            <span class="glyphicon glyphicon-ok"></span>
-                            <span>Delivery? Too long &amp; too much &#36;&#36;...</span>
-                        </li>
-                        <li>
-                            <span class="glyphicon glyphicon-ok"></span>
-                            <span>There must be a better way...</span>
-                        </li>
-                  </ul>
-
-                </div>
-            </div>
-            <div class="col-md-6 col-md-offset-3 text-justify voffset3">
-              <blockquote id="block-quote-border">
-                <p>
-                  The MealJet team often found themselves in a pinch when it came to eating. In the midst of paying the price for procrastination, they had to work on projects and they didn’t have the time to go pick up food or let alone make their own. As customers, they wanted something to convenient, affordable, and healthy that doesn’t break the bank.</br></br>
-                  MealJet aims to build a community of those that need food quickly and conveniently, while also exposing fellow MealJetters to a variety of cuisines throughout the week.</br></br>
-                  Necessity is the mother of invention, and MealJet is no exception
-                </p>
-              </blockquote>
-            </div>
-
-
-            <div id="faq-wrapper" class="col-md-6 col-md-offset-3">
-                <dl class="text-left dl-horizontal">
-                    <dt>Anuj Abrol</dt>
-                    <dd>
-                        Anuj is a current junior that could not find enough places that offered affordable healthy meals on campus. He also wondered why he had to go to the food and not vice versa. At MealJet, Anuj is pursuing his passion of using technology to solve operational problems to lift MealJet off the runway.
-                    </dd>
-                    <dt>Jinesh Shah</dt>
-                    <dd>
-                        Jinesh is studying User Experience at the School of Information. He lives a little too far from any good places to eat and wanted to get food much quicker. Now, he uses his design artistry to make ordering food a breeze.
-                    </dd>
-                    <dt>Rahul Raina</dt>
-                    <dd>
-                        Rahul is a current junior that always ran into an issue with getting food. He felt that the process wasn’t convenient at all, and even after he bought a scooter, the problem was still there. At MealJet he is using his technical prowess to make the eating process more efficient.
-                    </dd>
-                </dl>
-            </div>
-
-
-        </div> <!-- End .container-fluid -->
 
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/static/js/script.faq.js"></script>
+
+        <script type="text/javascript" src="{% static 'core/js/bootstrap.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'core/js/script.base.js' %}"></script>
 
 
     </body>

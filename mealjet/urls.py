@@ -7,8 +7,10 @@ admin.autodiscover()
 
 
 # See: https://docs.djangoproject.com/en/dev/topics/http/urls/
+#TODO: Add regex that captures anything that doesn't match and redirets to homepage
 urlpatterns = patterns('',
     # Admin panel and documentation:
+    url(r'^$', include('apps.core.urls', namespace='core')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
