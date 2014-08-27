@@ -50,7 +50,12 @@
   <!-- Custom styles for this template -->
   <link href="{% static 'core/css/base.css' %}" rel="stylesheet">
 
+  {% block extra_css %}{% endblock %}
+
   {% endcompress %}
+
+
+  {% block extra_head %}{% endblock %}
 
   <!-- Just for debugging purposes. Don't actually copy this line! -->
   <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -92,6 +97,11 @@
             </div><!-- /.container-fluid -->
         </nav>
 
+        <div class="container-fluid self-container-nopadding">
+
+          {% block content %}{% endblock %}
+
+        </div> <!-- End .container-fluid -->
 
         <!-- Bootstrap core JavaScript
         ================================================== -->
@@ -99,8 +109,12 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
         {% compress js %}
+
         <script type="text/javascript" src="{% static 'core/js/bootstrap.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'core/js/script.base.js' %}"></script>
+
+        {% block extra_js %}{% endblock %}
+
         {% endcompress %}
 
     </body>
