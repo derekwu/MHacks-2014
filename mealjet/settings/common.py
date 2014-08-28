@@ -270,6 +270,8 @@ COMPRESS_CSS_HASHING_METHOD = 'content'
 
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_CSS_FILTERS
 COMPRESS_CSS_FILTERS = [
+    # Creates absolute urls from relative ones.
+    'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.template.TemplateFilter',
 ]
 

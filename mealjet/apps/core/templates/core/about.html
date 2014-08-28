@@ -1,0 +1,77 @@
+
+{% extends 'core/base.html' %}
+{% load staticfiles %}
+
+{% block extra_css %}
+<link href="{% static 'core/css/about.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+    <p class="lead cover-heading">About Us </p>
+</div>
+
+<div class="row">
+    <div id="about-head" class="col-md-6 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12 col-xs-offset-0 nopadding">
+
+        <ul class="list-unstyled">
+            <li>
+                <span class="glyphicon glyphicon-ok"></span>
+                <span>Find yourself hungry?</span>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-ok"></span>
+                <span>Forgot to do grocery? Again...</span>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-ok"></span>
+                <span>Pick up food? Have you seen the weather...</span>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-ok"></span>
+                <span>Delivery? Too long &amp; too much &#36;&#36;...</span>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-ok"></span>
+                <span>There must be a better way...</span>
+            </li>
+        </ul>
+
+    </div>
+</div>
+<div class="col-md-6 col-md-offset-3 text-justify voffset3">
+  <blockquote id="block-quote-border">
+    <p>
+      The MealJet team often found themselves in a pinch when it came to eating. In the midst of paying the price for procrastination, they had to work on projects and they didn’t have the time to go pick up food or let alone make their own. As customers, they wanted something to convenient, affordable, and healthy that doesn’t break the bank.</br></br>
+      MealJet aims to build a community of those that need food quickly and conveniently, while also exposing fellow MealJetters to a variety of cuisines throughout the week.</br></br>
+      Necessity is the mother of invention, and MealJet is no exception
+  </p>
+</blockquote>
+</div>
+
+
+<div id="faq-wrapper" class="col-md-6 col-md-offset-3">
+    <dl class="text-left dl-horizontal">
+        <dt>Anuj Abrol</dt>
+        <dd>
+            Anuj is a current junior that could not find enough places that offered affordable healthy meals on campus. He also wondered why he had to go to the food and not vice versa. At MealJet, Anuj is pursuing his passion of using technology to solve operational problems to lift MealJet off the runway.
+        </dd>
+        <dt>Jinesh Shah</dt>
+        <dd>
+            Jinesh is studying User Experience at the School of Information. He lives a little too far from any good places to eat and wanted to get food much quicker. Now, he uses his design artistry to make ordering food a breeze.
+        </dd>
+        <dt>Rahul Raina</dt>
+        <dd>
+            Rahul is a current junior that always ran into an issue with getting food. He felt that the process wasn’t convenient at all, and even after he bought a scooter, the problem was still there. At MealJet he is using his technical prowess to make the eating process more efficient.
+        </dd>
+    </dl>
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'core/js/script.about.js' %}"></script>
+{% endblock %}

@@ -7,6 +7,10 @@ def base(request):
     context = {}
     return render(request, 'core/base.html', context)
 
+def about(request):
+    context = {}
+    return render(request, 'core/about.html', context)
+
 def faq(request):
     context = {}
     return render(request, 'core/faq.html', context)
