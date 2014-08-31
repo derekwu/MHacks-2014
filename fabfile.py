@@ -21,3 +21,35 @@ def build_commit(warn_only=True):
     local('git merge %s' % local_branch)
     local('git push origin %s' % rebase_branch)
     local('git checkout %s' % local_branch)
+
+
+def server() :
+    """This pushes to the EC2 instance defined below"""
+    # The Elastic IP to your server
+    env.host_string = '54.68.28.106'
+    # your user on that system
+    env.user = 'ubuntu' 
+    # Assumes that your *.pem key is in the same directory as your fabfile.py
+    env.key_filename = "~/.ssh/mealJetAdmin.pem"
+
+
+def staging() :
+    # path to the directory on the server where your vhost is set up
+    path = "/home/ubuntu/web/prod.mealjet.co"
+    # name of the application process
+    process = "production"
+
+    print(red("Beginning Deploy:"))
+    with cd("%s/app" % path) :
+        run("pwd")
+        print(green("Pulling master from GitHub..."))
+        run("git pull origin master")
+        print(green("Installing requirements..."))
+        run("source %s/prodenv/bin/activate && pip install -r requirements.txt" % path)
+        print(green("Syncing the database..."))
+        run("source %s/prodenv/bin/activate && sudo python manage.py syncdb" % path)
+        print(green("Migrating the database..."))
+        run("source %s/prodenv/bin/activate && sudo python manage.py migrate" % path)
+        print(green("Restart the uwsgi process"))
+        run("sudo service %s restart" % process)
+    print(red("DONE!"))
