@@ -22,6 +22,8 @@ def build_commit(warn_only=True):
     local('git rebase %s' % dev_branch)
     local('git push origin %s' % master_branch)
     local('git checkout %s' % dev_branch)
+    local('git push origin %s' % dev_branch)
+
 
 
 def server() :
