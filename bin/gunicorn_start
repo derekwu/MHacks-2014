@@ -23,10 +23,10 @@ test -d $RUNDIR || mkdir -p $RUNDIR
 
 # Start your Django Unicorn
 # Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
-exec gunicorn ${DJANGO_WSGI_MODULE}:application \
-  --name $NAME \
-  --workers $NUM_WORKERS \
- --user=$USER \
-  --bind=unix:$SOCKFILE \
-  --log-level=error \
-  --log-file=/home/ubuntu/web/prod.mealjet.co/logs/error.log
+exec gunicorn ${DJANGO_WSGI_MODULE}:application -c /home/ubuntu/web/prod.mealjet.co/app/gunicorn.py.ini #\
+#  --name $NAME \
+#  --workers $NUM_WORKERS \
+# --user=$USER \
+#  --bind=unix:$SOCKFILE \
+#  --log-level=error \
+#  --log-file=/home/ubuntu/web/prod.mealjet.co/logs/error.log
