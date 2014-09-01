@@ -33,6 +33,7 @@ DATABASES = {
         'PORT': '',
     }
 }
+
 ########## END DATABASE CONFIGURATION
 
 
