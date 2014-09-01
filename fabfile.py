@@ -1,7 +1,8 @@
 from fabric.api import *
+from fabric.api import settings
 from fabric.colors import green, red
 from fabric import colors
-import time
+from time import sleep
 
 
 def build_commit(warn_only=True):
@@ -46,7 +47,7 @@ def staging() :
         print(green("Pulling master from GitHub..."))
         run("git pull origin master")
         print(green("Installing requirements..."))
-        run("source %s/prodenv/bin/activate && pip install -r requirements.txt" % path)
+        run("source %s/prodenv/bin/activate && pip install -r reqs/dev.txt" % path)
         print(green("Collecting static files..."))
         #run("source %s/prodenv/bin/activate && python manage.py collectstatic --noinput" % path)
         print(green("Syncing the database..."))
@@ -67,7 +68,6 @@ def set_env_defaults():
 def restart_gunicorn():
     """Restart hard the Gunicorn process"""
     stop()
-    time.sleep(5)
     start()
 
 
@@ -85,9 +85,7 @@ def start():
         prefix = []
         if 'virtualenv_dir' in env:
             prefix.append('source %s/bin/activate' % env.virtualenv_dir)
-        if 'django_settings_module' in env:
-            prefix.append('export DJANGO_SETTINGS_MODULE=%s' %
-                          env.django_settings_module)
+        
 
         prefix_string = ' && '.join(prefix)
         if len(prefix_string) > 0:
@@ -97,19 +95,18 @@ def start():
             '--daemon',
             '--pid %s' % env.gunicorn_pidpath,
         ]
-        if 'gunicorn_workers' in env:
-            options.append('--workers %s' % env.gunicorn_workers)
-        if 'gunicorn_worker_class' in env:
-            options.append('--worker-class %s' % env.gunicorn_worker_class)
+        
         options_string = ' '.join(options)
 
         if 'paster_config_file' in env:
             run('%s gunicorn_paster %s %s' % (prefix_string, options_string,
                                    env.paster_config_file))
         else:
-            run('%s gunicorn %s -c %s wsgi:application' % (prefix_string, options_string,
+            with settings(warn_only=True):
+                result = run('%s gunicorn -c %s wsgi:application' % (prefix_string,
                                    env.gunicorn_wsgi_app))
-
+                print result;
+        puts (colors.green ("HERE"))
         if gunicorn_running():
             puts(colors.green("Gunicorn started."))
         else:
@@ -150,4 +147,5 @@ def gunicorn_running_workers():
     return count
 
 def gunicorn_running():
+    puts (colors.green ("HERE2"))
     return run('ls ' + env.gunicorn_pidpath, quiet=True).succeeded
