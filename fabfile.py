@@ -66,8 +66,12 @@ def set_env_defaults():
 
 def restart_gunicorn():
     """Restart hard the Gunicorn process"""
-    stop()
-    start()
+    puts(colors.red("Stopping!"))
+    sudo ('supervisorctl stop prodenv')
+    puts(colors.red("Start!"))
+
+    sudo ('supervisorctl start prodenv')
+
 
 
 def start():
@@ -101,10 +105,7 @@ def start():
             run('%s gunicorn_paster %s %s' % (prefix_string, options_string,
                                    env.paster_config_file))
         else:
-            with settings(warn_only=True):
-                result = run('%s gunicorn -c %s wsgi:application' % (prefix_string,
-                                   env.gunicorn_wsgi_app))
-                print result;
+            run('%s /home/ubuntu/web/prod.mealjet.co/app/gunicorn.sh' % (prefix_string))
         puts (colors.green ("HERE"))
         if gunicorn_running():
             puts(colors.green("Gunicorn started."))
