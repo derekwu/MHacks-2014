@@ -32,12 +32,10 @@ def server() :
     # Assumes that your *.pem key is in the same directory as your fabfile.py
     env.key_filename = "~/.ssh/mealJetAdmin.pem"
 
-
 def staging() :
     # path to the directory on the server where your vhost is set up
     path = "/home/ubuntu/web/prod.mealjet.co"
     # name of the application process
-    process = "production"
 
     print(red("Beginning Deploy:"))
     with cd("%s/app" % path) :
@@ -46,10 +44,14 @@ def staging() :
         run("git pull origin master")
         print(green("Installing requirements..."))
         run("source %s/prodenv/bin/activate && pip install -r requirements.txt" % path)
+        print(green("Collecting static files..."))
+        run("source %s/prodenv/bin/activate && python manage.py collectstatic --noinput" % path)
         print(green("Syncing the database..."))
-        run("source %s/prodenv/bin/activate && sudo python manage.py syncdb" % path)
+        run("source %s/prodenv/bin/activate && python manage.py syncdb" % path)
         print(green("Migrating the database..."))
-        run("source %s/prodenv/bin/activate && sudo python manage.py migrate" % path)
-        print(green("Restart the uwsgi process"))
-        run("sudo service %s restart" % process)
+        run("source %s/prodenv/bin/activate && python manage.py migrate" % path)
+        print(green("closing the gunicorn process"))
+        run("kill `cat run/gunicorn.pid`")
+        print(green("Starting the gunicorn process"))
+        run("gunicorn -c gunicorn.py.ini wsgi:application")
     print(red("DONE!"))
