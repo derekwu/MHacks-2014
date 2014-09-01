@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load compress %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +43,7 @@
   <link href='https://fonts.googleapis.com/css?family=Arvo:400,400italic' rel='stylesheet' type='text/css'>
 
 
+  {% compres css %}
   <!-- Bootstrap core CSS -->
   <link href="{% static 'core/css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -49,8 +51,8 @@
   <link href="{% static 'core/css/base.css' %}" rel="stylesheet">
 
   {% block extra_css %}{% endblock %}
-
-
+  
+  {% end compress %}
 
   {% block extra_head %}{% endblock %}
 
