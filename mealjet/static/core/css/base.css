@@ -1,0 +1,149 @@
+
+/*
+ * Globals
+ */
+
+
+
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #000;
+}
+
+/* Custom default button */
+.btn-default,
+.btn-default:hover,
+.btn-default:focus {
+  color: #333;
+  text-shadow: none; /* Prevent inheritence from `body` */
+  background-color: #fff;
+  border: 1px solid #fff;
+}
+
+
+/*
+ * Base structure
+ */
+
+html,
+body {
+  height: 100%;
+  /*background-image:url('');*/
+  /*background-color: #3e4e65;*/
+  background-color: #FFFFFF
+  background-size: 100% 100%;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-attachment: scroll;
+
+}
+body {
+  color: #000;
+  text-align: center;
+  /*text-shadow: 0 1px 1px rgba(0,0,0,.25);*/
+  /*box-shadow: inset 0 0 15px rgba(0,0,0,.5);*/
+  padding-top:51px;
+  /*background:url(img/background.jpg) no-repeat center center fixed;*/
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+* {
+    font-family: 'Arvo', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+}
+
+/* Extra markup and styles for table-esque vertical and horizontal centering */
+
+/* Padding for spacing */
+.inner {
+  padding: 30px;
+}
+
+.nopadding {
+  padding: 0;
+}
+
+.voffset  { margin-top: 2px; }
+.voffset1 { margin-top: 5px; }
+.voffset2 { margin-top: 10px; }
+.voffset3 { margin-top: 15px; }
+.voffset4 { margin-top: 30px; }
+.voffset5 { margin-top: 40px; }
+.voffset6 { margin-top: 60px; }
+.voffset7 { margin-top: 80px; }
+.voffset8 { margin-top: 100px; }
+.voffset9 { margin-top: 150px; }
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.self-img-thumbnail {
+  border-radius: 10px;
+  border: 0px solid #FFFFFF;
+}
+
+/** Header **/
+.self-navbar-green {
+  background:#38b056;
+/*  -webkit-box-shadow: 0 10px 0 0 #3e4e65;
+  box-shadow: 0 10px 0 0 #3e4e65;*/
+
+  -webkit-box-shadow: 0 10px 0 0 #FFFFFF;
+  box-shadow: 0 10px 0 0 #FFFFFF;
+
+}
+
+.self-navbar-green a {
+  color:white;
+}
+
+.self-navbar-green a:hover {
+  background:#2ecc71 !important;
+}
+
+.self-navbar-icon button {
+  /*background-color: #fff;*/
+  color: #fff;
+  border: 2px solid white;
+}
+
+.self-navbar-icon span {
+  background-color: #fff;
+}
+
+.logo-link,
+{
+    padding: 0;
+}
+
+.logo-img:hover {
+
+    padding: 0 10px 0 10px;
+    background-color: #2ecc71;
+}
+
+.logo-img {
+    padding: 0 10px 0 10px;
+}
+
+/** Container **/
+.self-container-nopadding {
+  padding: 30px 30px 30px 30px;
+}
+
+
+
+
+
+
+
