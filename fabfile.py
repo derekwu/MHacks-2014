@@ -147,7 +147,7 @@ def install_supervisor(virtenv_name, stage):
 
     #Build new supervisor file
     sudo("echo '[program:%s]' >> %s" % (virtenv_name, supervisor_file_path))
-    sudo("echo 'command = /home/ubuntu/web/%s.mealjet.co/app/bin/gunicorn_start' >> %s" % (stage, supervisor_file_path))
+    sudo("echo 'command = /home/ubuntu/web/%s.mealjet.co/website/bin/gunicorn_start' >> %s" % (stage, supervisor_file_path))
     sudo("echo 'user = ubuntu' >> %s" % supervisor_file_path)
     sudo("echo 'stdout_logfile =  /home/ubuntu/web/%s.mealjet.co/logs/access.log' >> %s" % (stage, supervisor_file_path))
     sudo("echo 'stderr_logfile =  /home/ubuntu/web/%s.mealjet.co/logs/error.log' >> %s" % (stage, supervisor_file_path))
@@ -161,14 +161,6 @@ def install_supervisor(virtenv_name, stage):
     print(red("Done installing supervisor!"))
 
 
-def set_env_defaults():
-    env.setdefault('remote_workdir', '/home/ubuntu/web/prod.mealjet.co/app')
-    env.setdefault('gunicorn_pidpath', env.remote_workdir + '/run/gunicorn.pid')
-    env.setdefault('virtualenv_dir', '/home/ubuntu/web/prod.mealjet.co/prodenv')
-    env.setdefault('gunicorn_wsgi_app', '/home/ubuntu/web/prod.mealjet.co/app/gunicorn.py.ini')
-
-
-
 def restart_gunicorn(virtenv_name):
 
     """Restart hard the Gunicorn process"""
@@ -178,79 +170,3 @@ def restart_gunicorn(virtenv_name):
 
     sudo ('supervisorctl start %s' % virtenv_name)
 
-
-def start():
-    """Start the Gunicorn process"""
-
-    if gunicorn_running():
-        puts(colors.red("Gunicorn is already running!"))
-        return
-
-    if 'gunicorn_wsgi_app' not in env:
-        abort(colors.red('env.gunicorn_wsgi_app not defined'))
-
-    with cd(env.remote_workdir):
-        prefix = []
-        if 'virtualenv_dir' in env:
-            prefix.append('source %s/bin/activate' % env.virtualenv_dir)
-        
-
-        prefix_string = ' && '.join(prefix)
-        if len(prefix_string) > 0:
-            prefix_string += ' && '
-
-        options = [
-            '--daemon',
-            '--pid %s' % env.gunicorn_pidpath,
-        ]
-        
-        options_string = ' '.join(options)
-
-        if 'paster_config_file' in env:
-            run('%s gunicorn_paster %s %s' % (prefix_string, options_string,
-                                   env.paster_config_file))
-        else:
-            run('%s /home/ubuntu/web/prod.mealjet.co/app/gunicorn.sh' % (prefix_string))
-        puts (colors.green ("HERE"))
-        if gunicorn_running():
-            puts(colors.green("Gunicorn started."))
-        else:
-            abort(colors.red("Gunicorn wasn't started!"))
-
-
-
-def stop():
-    """Stop the Gunicorn process"""
-
-    set_env_defaults()
-
-    if not gunicorn_running():
-        puts(colors.red("Gunicorn isn't running!"))
-        return
-
-    run('kill `cat %s`' % (env.gunicorn_pidpath))
-
-    for i in range(0, 5):
-        puts('.', end='', show_prefix=i == 0)
-
-        if gunicorn_running():
-            sleep(1)
-        else:
-            puts('', show_prefix=False)
-            puts(colors.green("Gunicorn was stopped."))
-            break
-    else:
-        puts(colors.red("Gunicorn wasn't stopped!"))
-        return
-
-
-def gunicorn_running_workers():
-    count = None
-    with hide('running', 'stdout', 'stderr'):
-        count = run('ps -e -o ppid | grep `cat %s` | wc -l' %
-                    env.gunicorn_pidpath)
-    return count
-
-def gunicorn_running():
-    puts (colors.green ("HERE2"))
-    return run('ls ' + env.gunicorn_pidpath, quiet=True).succeeded
