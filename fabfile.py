@@ -69,6 +69,23 @@ def init_git(virtenv_name, stage):
         git_ssh_path = prompt("What's the git SSH path: ")
         run ('git remote add origin %s' % git_ssh_path)
         run ('git pull origin %s' % stage)
+def init_database ():
+
+    new_user = prompt ("Enter new user name: ")
+    new_user_password = prompt ("Enter new user password: ")
+    new_db_name = prompt ("Enter new database name: ")
+    root_password = prompt ("Enter ROOT password: ")
+
+    MYSQL_CREATE_USER = """CREATE USER '%s'@'localhost' IDENTIFIED BY '%s';"""% (new_user,new_user_password)
+
+    MYSQL_CREATE_DB = """CREATE DATABASE %s DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;""" % (new_db_name)
+
+    MYSQL_GRANT_PERMISSIONS = """GRANT ALL ON %s.* TO '%s'@'localhost';FLUSH PRIVILEGES;""" % (new_db_name,new_user)
+
+    run('echo "%s" | mysql --user="%s" --password="%s"' % (MYSQL_CREATE_USER, "root" , root_password))
+    run('echo "%s" | mysql --user="%s" --password="%s"' % (MYSQL_CREATE_DB, "root" , root_password))
+    run('echo "%s" | mysql --user="%s" --password="%s"' % (MYSQL_GRANT_PERMISSIONS, "root" , root_password))
+
 
 
 def init(virtenv_name, stage):
@@ -96,6 +113,9 @@ def beta(arg) :
 
     if(arg == 'init'):
         init(virtenv_name, stage)
+        init_database_flag = str(prompt ("Do you want to create a new database and user y/n: "))
+        if (init_database_flag == "y" or init_database_flag == "Y" or init_database_flag==""):
+        init_database()
 
     deploy(virtenv_name, stage)
 
