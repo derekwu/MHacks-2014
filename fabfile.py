@@ -51,10 +51,11 @@ def init_directories(virtenv_name, stage):
         run('touch web/%s.mealjet.co/logs/error.log' % stage)
 
 
+
 def load_dependencies(virtenv_name, stage):
 
     sudo ('apt-get update')
-    sudo ('apt-get install python python-pip git vim')
+    sudo ('apt-get install python  python-dev python-pip git mysql-server mysql-client libmysqlclient-dev')
     sudo ('pip install virtualenv')
 
     with cd('web/%s.mealjet.co' % stage):
@@ -113,18 +114,19 @@ def deploy(virtenv_name, stage) :
         print(green("Pulling master from GitHub..."))
         run("git pull origin %s" % stage)
 
+        #TODO CHANGE TO BETA!!!!!!!
         print(green("Installing requirements..."))
-        run("source %s/%s/bin/activate && pip install -r reqs/%s.txt" % path, virtenv_name, stage)
+        run("source %s/%s/bin/activate && pip install -r reqs/dev.txt" % ( path, virtenv_name) )
 
         print(green("Collecting static files..."))
-        #run("source %s/%s/bin/activate && python manage.py collectstatic --noinput" % path, virtenv_name, )
+        #run("source %s/%s/bin/activate && python manage.py collectstatic --noinput" % ( path, virtenv_name ) )
 
 
         print(green("Syncing the database..."))
-        run("source %s/%s/bin/activate && python manage.py syncdb" % path, virtenv_name)
+        run("source %s/%s/bin/activate && python manage.py syncdb" % ( path, virtenv_name ) )
 
         print(green("Migrating the database..."))
-        run("source %s/%s/bin/activate && python manage.py migrate" % path, virtenv_name)
+        run("source %s/%s/bin/activate && python manage.py migrate" % ( path, virtenv_name ) )
 
         restart_gunicorn(virtenv_name)
 

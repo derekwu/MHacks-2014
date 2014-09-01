@@ -1,8 +1,8 @@
 #!/bin/bash
 
 NAME="core"                                  # Name of the application
-DJANGODIR=/home/ubuntu/web/prod.mealjet.co/app             # Django project directory
-SOCKFILE=/home/ubuntu/web/prod.mealjet.co/app/run/gunicorn.sock  # we will communicte using this unix socket
+DJANGODIR=/home/ubuntu/web/beta.mealjet.co/website  # Django project directory
+SOCKFILE=/home/ubuntu/web/beta.mealjet.co/website/run/gunicorn.sock  # we will communicte using this unix socket
 USER=ubuntu                                        # the user to run as
 GROUP=webapps                                     # the group to run as
 NUM_WORKERS=3                                     # how many worker processes should Gunicorn spawn
@@ -13,7 +13,7 @@ echo "Starting $NAME as `whoami`"
 
 # Activate the virtual environment
 cd $DJANGODIR
-source ../prodenv/bin/activate
+source ../betaenv/bin/activate
 #export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
 #export PYTHONPATH=$DJANGODIR:$PYTHONPATH
 
@@ -23,7 +23,7 @@ test -d $RUNDIR || mkdir -p $RUNDIR
 
 # Start your Django Unicorn
 # Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
-exec gunicorn ${DJANGO_WSGI_MODULE}:application -c /home/ubuntu/web/prod.mealjet.co/app/gunicorn.py.ini #\
+exec gunicorn ${DJANGO_WSGI_MODULE}:application -c /home/ubuntu/web/beta.mealjet.co/website/gunicorn.py.ini #\
 #  --name $NAME \
 #  --workers $NUM_WORKERS \
 # --user=$USER \
