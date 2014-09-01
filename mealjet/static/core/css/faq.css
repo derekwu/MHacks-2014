@@ -1,0 +1,59 @@
+
+
+/*Special offset for lg screen sizes*/
+
+#glyph-1.col-lg-offset-1 {
+  margin-left: 12.5%;
+}
+
+#glyph-1 {
+  font-size: 20em;
+  color: #38b056;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0;
+}
+
+
+
+/* FAQ Box */
+
+
+#faq-wrapper {
+  /*border: 2px solid #3e4e65;*/
+  padding: 2%;
+}
+
+#faq-wrapper > dl > dt {
+  font-size: 1.5em;
+  margin-bottom: 5px;
+  color: #38b056;
+}
+
+#faq-wrapper > dl > dd {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+#faq-wrapper > dl > dd > a {
+  color: #3e4e65;
+}
+
+
+@media only screen and (max-width: 768px) {
+
+
+
+    #glyph-1 {
+        font-size: 10em;
+    }
+
+    #faq-wrapper > dl > dd {
+      text-align: left;
+    }
+
+}
+
+
