@@ -106,16 +106,16 @@ def beta(arg) :
     # Assumes that your *.pem key is in the same directory as your fabfile.py
     env.key_filename = '~/.ssh/mealJetBeta.pem'
 
-    stage = 'beta'
+    stage = 'dev'
 
     # ex: 'prodenv' or 'betaenv'
     virtenv_name = stage + 'env'
 
     if(arg == 'init'):
         init(virtenv_name, stage)
-        init_database_flag = str(prompt ("Do you want to create a new database and user y/n: "))
+        init_database_flag = str(prompt ("Do you want to create a new database and user Y/n: "))
         if (init_database_flag == "y" or init_database_flag == "Y" or init_database_flag==""):
-        init_database()
+            init_database()
 
     deploy(virtenv_name, stage)
 
