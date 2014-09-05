@@ -41,12 +41,12 @@ def server() :
 def init_directories(virtenv_name, stage):
     
     with cd('~/'):
-        run ('mkdir web')
-        run ('mkdir web/%s.mealjet.co' % stage)
+        run ('mkdir -p web')
+        run ('mkdir -p web/%s.mealjet.co' % stage)
 
-        run ('mkdir web/%s.mealjet.co/website' % stage)
+        run ('mkdir -p web/%s.mealjet.co/website' % stage)
 
-        run ('mkdir web/%s.mealjet.co/logs' % stage)
+        run ('mkdir -p web/%s.mealjet.co/logs' % stage)
 
         #Make two log files for supervisor process
         run('touch web/%s.mealjet.co/logs/access.log' % stage)
