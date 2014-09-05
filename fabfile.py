@@ -2,7 +2,9 @@ from fabric.api import *
 from fabric.api import settings
 from fabric.colors import green, red
 from fabric import colors
+from fabric.contrib.files import append
 from time import sleep
+
 
 
 def build_commit(warn_only=True):
@@ -179,9 +181,13 @@ def init_nginx(virtenv_name, stage):
         nginx_conf_file = open('nginx.conf.template')
         nginx_conf_str = nginx_conf_file.read().format(**kwargs)
     
-    sudo("echo '%s' > /etc/nginx/sites-available/mealjet" % nginx_conf_str)
+    #sudo("echo '%s' > /etc/nginx/sites-available/mealjet" % nginx_conf_str)
+    #append(nginx_conf_str, '/etc/nginx/sites-available/mealjet',use_sudo=True)
+    sudo("cat > /etc/nginx/sites-available/mealjet <<\"HEREDOC\" \n %s \nHEREDOC" % nginx_conf_str)
     
     sudo("ln -s /etc/nginx/sites-available/mealjet /etc/nginx/sites-enabled/mealjet")
+
+    sudo("rm -f /etc/nginx/sites-enabled/default")
 
     sudo("nginx -t")
     sudo("service nginx restart")
