@@ -181,10 +181,9 @@ def init_nginx(virtenv_name, stage):
         nginx_conf_file = open('nginx.conf.template')
         nginx_conf_str = nginx_conf_file.read().format(**kwargs)
     
-    #sudo("echo '%s' > /etc/nginx/sites-available/mealjet" % nginx_conf_str)
-    #append(nginx_conf_str, '/etc/nginx/sites-available/mealjet',use_sudo=True)
     sudo("cat > /etc/nginx/sites-available/mealjet <<\"HEREDOC\" \n %s \nHEREDOC" % nginx_conf_str)
     
+    sudo("rm -f /etc/nginx/sites-enabled/mealjet")
     sudo("ln -s /etc/nginx/sites-available/mealjet /etc/nginx/sites-enabled/mealjet")
 
     sudo("rm -f /etc/nginx/sites-enabled/default")
