@@ -180,7 +180,7 @@ def init_nginx(virtenv_name, stage):
         nginx_conf_str = nginx_conf_file.read().format(**kwargs)
     
     sudo("echo '%s' > /etc/nginx/sites-available/mealjet" % nginx_conf_str)
->>>>>>> aa4486dae5af7c28e7cae500610c5bebdbfe703a
+    
     sudo("ln -s /etc/nginx/sites-available/mealjet /etc/nginx/sites-enabled/mealjet")
 
     sudo("nginx -t")
