@@ -1,21 +1,56 @@
 #!/bin/bash
 
+
+if [[ $# -le 1 ]]; then
+  echo 'Please specify an option. Use -h or --help for more information' 
+  exit
+fi
+
+while [[ $# > 1 ]]
+do
+key="$1"
+shift
+
+  case $key in
+      -e|--environment)
+        if [[ "$1" == "dev" || "$1" == "beta" ]]; then
+          ENVIRONMENT="$1"
+        else
+          echo 'Invalid option. Use 'dev' or 'beta' (case senstitive)'
+          exit
+        fi
+      shift
+      ;;
+      -h|--help)
+        $(echo 'Please use -e or --environment [beta, prod]')
+      shift
+      ;;
+      *)
+      # unknown option
+      echo 'Invalid option. Please use -h or --help for command detail'
+      exit
+      ;;
+esac
+done
+
+STAGE=$ENVIRONMENT
+VIRTENV="${ENVIRONMENT}env"
+
 NAME="core"                                  # Name of the application
-DJANGODIR=/home/ubuntu/web/beta.mealjet.co/website  # Django project directory
-SOCKFILE=/home/ubuntu/web/beta.mealjet.co/website/run/gunicorn.sock  # we will communicte using this unix socket
+DJANGODIR=/home/ubuntu/web/${STAGE}.mealjet.co/website  # Django project directory
+SOCKFILE=/home/ubuntu/web/${STAGE}.mealjet.co/website/run/gunicorn.sock  # we will communicte using this unix socket
 USER=ubuntu                                        # the user to run as
 GROUP=webapps                                     # the group to run as
-NUM_WORKERS=3                                     # how many worker processes should Gunicorn spawn
-#DJANGO_SETTINGS_MODULE=/home/ubuntu/web/prod.mealjet.co/app/mealjet/settings/dev.py             # which settings file should Django use
 DJANGO_WSGI_MODULE=wsgi                     # WSGI module name
+
+echo $STAGE
+echo $VIRTENV
 
 echo "Starting $NAME as `whoami`"
 
 # Activate the virtual environment
 cd $DJANGODIR
-source ../betaenv/bin/activate
-#export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
-#export PYTHONPATH=$DJANGODIR:$PYTHONPATH
+source ../${VIRTENV}/bin/activate
 
 # Create the run directory if it doesn't exist
 RUNDIR=$(dirname $SOCKFILE)
@@ -23,10 +58,4 @@ test -d $RUNDIR || mkdir -p $RUNDIR
 
 # Start your Django Unicorn
 # Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
-exec gunicorn ${DJANGO_WSGI_MODULE}:application -c /home/ubuntu/web/beta.mealjet.co/website/gunicorn.py.ini #\
-#  --name $NAME \
-#  --workers $NUM_WORKERS \
-# --user=$USER \
-#  --bind=unix:$SOCKFILE \
-#  --log-level=error \
-#  --log-file=/home/ubuntu/web/prod.mealjet.co/logs/error.log
+exec gunicorn ${DJANGO_WSGI_MODULE}:application -c /home/ubuntu/web/${STAGE}.mealjet.co/website/gunicorn.py.ini 

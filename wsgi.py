@@ -14,7 +14,6 @@ framework.
 
 """
 import os,sys
-#sys.path.append('/home/ubuntu/web/prod.mealjet.co/app/mealjet')
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mealjet.settings.dev")
 

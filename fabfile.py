@@ -29,7 +29,7 @@ def build_commit(warn_only=True):
 def server() :
     """This pushes to the EC2 instance defined below"""
     # The Elastic IP to your server
-    env.host_string = '54.68.28.106'
+    env.host_string = '54.68.65.7'
     # your user on that system
     env.user = 'ubuntu' 
     # Assumes that your *.pem key is in the same directory as your fabfile.py
@@ -55,7 +55,7 @@ def init_directories(virtenv_name, stage):
 def load_dependencies(virtenv_name, stage):
 
     sudo ('apt-get update')
-    sudo ('apt-get install python  python-dev python-pip git mysql-server mysql-client libmysqlclient-dev')
+    sudo ('apt-get install python  python-dev python-pip git mysql-server mysql-client libmysqlclient-dev nginx')
     sudo ('pip install virtualenv')
 
     with cd('web/%s.mealjet.co' % stage):
@@ -64,11 +64,28 @@ def load_dependencies(virtenv_name, stage):
 
 def init_git(virtenv_name, stage):
 
+    #default_remote_file_name = 'git_ssh_file.pem' 
+    #run('mkdir -p ~/.ssh && chmod 700 ~/.ssh')
+
+    #with cd("~/.ssh"):
+    #  git_ssh_key_file = prompt("What's the path to the git SSH key file?")
+    #  
+    #  #upload file, and set permissions
+    #  run("touch %s" % default_remote_file_name)
+    #  put(git_ssh_key_file, default_remote_file_name)
+    #  run("chmod 600 %s" % default_remote_file_name)       
+    #  
+    #  #Add git to config file
+    #  run("echo -e 'Host bitbucket.org' >> config")
+    #  run("echo -e '\t IdentityFile ~/.ssh/%s' >> config" % default_remote_file_name)
+    #  run("echo -e ' '") # Adding space so can append other Host's later 
+
     with cd('~/web/%s.mealjet.co/website' % stage):
         run ('git init')
         git_ssh_path = prompt("What's the git SSH path: ")
         run ('git remote add origin %s' % git_ssh_path)
         run ('git pull origin %s' % stage)
+
 def init_database ():
 
     new_user = prompt ("Enter new user name: ")
@@ -100,13 +117,14 @@ def beta(arg) :
 
     """This pushes to the EC2 instance defined below"""
     # The Elastic IP to your server
-    env.host_string = '54.68.9.120'
+    env.host_string = '54.68.65.7'
+    #env.host_string = '54.68.9.120'
     # your user on that system
     env.user = 'ubuntu' 
     # Assumes that your *.pem key is in the same directory as your fabfile.py
-    env.key_filename = '~/.ssh/mealJetBeta.pem'
+    env.key_filename = '~/.ssh/mealJetAdmin.pem'
 
-    stage = 'dev'
+    stage = 'beta'
 
     # ex: 'prodenv' or 'betaenv'
     virtenv_name = stage + 'env'
