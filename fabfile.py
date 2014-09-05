@@ -111,6 +111,7 @@ def init(virtenv_name, stage):
     load_dependencies(virtenv_name, stage) 
     init_git(virtenv_name, stage)
     install_supervisor(virtenv_name, stage)
+    init_nginx(virtenv_name, stage)
 
 
 def beta(arg) :
@@ -170,6 +171,19 @@ def deploy(virtenv_name, stage) :
 
     print(red("DONE!"))
 
+def init_nginx(virtenv_name, stage):
+
+    kwargs = { 'stage' : stage }
+    
+    with cd('~/web/%s.mealjet.co/website' % stage): 
+        nginx_conf = open('nginx.conf.template').format(**kwargs)
+    
+    sudo("echo '%s' > /etc/nginx/sites-available/mealjet")
+    sudo("ln -s /etc/nginx/sites-available/mealjet /etc/nginx/sites-enabled/mealjet")
+
+    sudo("nginx -t")
+    sudo("service nginx restart")
+
 def install_supervisor(virtenv_name, stage):
 
     # -f installs all the dependencies
@@ -185,7 +199,7 @@ def install_supervisor(virtenv_name, stage):
 
     #Build new supervisor file
     sudo("echo '[program:%s]' >> %s" % (virtenv_name, supervisor_file_path))
-    sudo("echo 'command = /home/ubuntu/web/%s.mealjet.co/website/bin/gunicorn_start' >> %s" % (stage, supervisor_file_path))
+    sudo("echo 'command = /home/ubuntu/web/%s.mealjet.co/website/bin/gunicorn_start --environment %s' >> %s" % (stage, stage, supervisor_file_path))
     sudo("echo 'user = ubuntu' >> %s" % supervisor_file_path)
     sudo("echo 'stdout_logfile =  /home/ubuntu/web/%s.mealjet.co/logs/access.log' >> %s" % (stage, supervisor_file_path))
     sudo("echo 'stderr_logfile =  /home/ubuntu/web/%s.mealjet.co/logs/error.log' >> %s" % (stage, supervisor_file_path))
