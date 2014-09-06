@@ -1,4 +1,5 @@
-from django.contrib.auth.models import User, Group, Matches
+from django.contrib.auth.models import User, Group 
+from apps.core.models import Matches 
 from rest_framework import serializers
 
 
