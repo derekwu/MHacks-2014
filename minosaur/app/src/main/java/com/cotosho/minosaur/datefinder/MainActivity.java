@@ -1,9 +1,11 @@
-package com.cotosho.minosaur;
+package com.cotosho.minosaur.datefinder;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.cotosho.minosaur.R;
 
 
 public class MainActivity extends Activity {
