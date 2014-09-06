@@ -8,6 +8,7 @@ from apps.core import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
+router.register(r'matches', views.MatchesViewSet)
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/admin/#hooking-adminsite-instances-into-your-urlconf
 admin.autodiscover()
