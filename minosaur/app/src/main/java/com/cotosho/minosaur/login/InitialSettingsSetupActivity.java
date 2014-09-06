@@ -1,7 +1,9 @@
 package com.cotosho.minosaur.login;
 
+import android.app.Activity;
+
 /**
  * Created by derekwu on 9/6/14.
  */
-public class InitialSettingsSetupActivity {
+public class InitialSettingsSetupActivity extends Activity {
 }
