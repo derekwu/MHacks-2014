@@ -1,38 +1,34 @@
 package com.cotosho.minosaur.datefinder;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.cotosho.minosaur.R;
+import com.cotosho.minosaur.settings.SettingsActivity;
 
 
 public class MainActivity extends Activity {
+    public static final String PREFS_NAME = "BlindatePrefsFile";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        if (!settings.getBoolean(SettingsActivity.IS_SETUP_KEY, false)) {
+            startSettingsActivity();
+        } else {
+            setContentView(R.layout.activity_main);
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    private void startSettingsActivity() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+
     }
 }
