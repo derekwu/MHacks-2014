@@ -61,6 +61,7 @@ DEBUG_TOOLBAR_PATCH_SETTINGS = False
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 INSTALLED_APPS += (
     'debug_toolbar',
+    'rest_framework',
 )
 
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
@@ -74,3 +75,8 @@ MIDDLEWARE_CLASSES += (
 DEBUG_TOOLBAR_CONFIG = {
 }
 ########## END TOOLBAR CONFIGURATION
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+        'PAGINATE_BY': 10
+}
