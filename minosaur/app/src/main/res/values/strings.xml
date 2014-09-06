@@ -2,7 +2,10 @@
 <resources>
 
     <string name="app_name">BlinDate</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- MainActivity -->
+    <string name="button_date">Date</string>
+    <string name="button_settings">*</string>
 
 </resources>
